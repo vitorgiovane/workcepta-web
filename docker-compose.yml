@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  # Node (alpine)
+  node:
+    container_name: "${PROJECT_NAME}-node"
+    build:
+      context: ./docker/node
+    tty: true
+    environment:
+      SERVICE_NAME: ${PROJECT_NAME}-node
+      SERVICE_TAGS: dev
+    working_dir: /app
+    restart: "always"
+    volumes:
+      - ./:/app
+    ports:
+      - "${NODE_PORT}:3000"
+
+networks:
+  default:
+    external:
+      name: api_app-network
